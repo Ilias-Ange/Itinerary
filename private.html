@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="パスフレーズで開く旅行の内緒メモです。">
+    <title>内緒メモ | 旅行のしおり</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="private">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="index.html">
+          <strong class="js-trip-title">旅行のしおり</strong>
+          <span class="js-trip-dates">旅の日程</span>
+        </a>
+        <nav class="site-nav" aria-label="メインナビゲーション">
+          <a href="index.html">トップ</a>
+          <a href="schedule.html">日程</a>
+          <a href="packing.html">持ち物</a>
+          <a href="links.html">リンク</a>
+          <a href="private.html" aria-current="page">内緒メモ</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-title" aria-labelledby="page-title">
+        <p class="eyebrow js-trip-destination">旅先</p>
+        <h1 id="page-title">内緒メモ</h1>
+        <p class="lead">
+          宿泊や合流の細かいメモは、パスフレーズを知っている人だけがブラウザ上で開けます。
+        </p>
+      </section>
+
+      <section class="section private-lock" aria-labelledby="unlock-title">
+        <div class="private-lock-panel">
+          <h2 id="unlock-title">パスフレーズを入力</h2>
+          <p>
+            入力したパスフレーズは送信されません。この端末のブラウザ内で、暗号化データの復号だけに使います。
+          </p>
+          <form class="unlock-form js-private-form">
+            <label for="private-passphrase">パスフレーズ</label>
+            <div class="unlock-row">
+              <input id="private-passphrase" class="js-private-passphrase" type="password" autocomplete="current-password" inputmode="text">
+              <button class="button" type="submit">開く</button>
+            </div>
+            <p class="private-status js-private-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section private-content js-private-content" aria-live="polite" hidden></section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="js-trip-title">旅行のしおり</span> / 内緒メモ
+      </div>
+    </footer>
+
+    <script src="data/trip-data.js"></script>
+    <script src="data/private-trip.enc.js"></script>
+    <script src="assets/app.js"></script>
+    <script src="assets/private.js"></script>
+  </body>
+</html>
