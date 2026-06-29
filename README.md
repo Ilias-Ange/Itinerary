@@ -1,25 +1,21 @@
 # 旅行のしおり
 
-GitHub Pagesで公開しやすい、ビルド不要の旅行しおりテンプレートです。
+GitHub Pagesで公開する、旅行しおりの静的サイトです。
 
-## 編集方法
+## 構成
 
-旅行の内容は `data/trip-data.js` の `window.TRIP_DATA` を編集します。
+- `index.html`: 入口ページ
+- `schedule.html`: パスフレーズで開く暗号化された旅程
+- `packing.html`: 持ち物チェックリスト
+- `links.html`: 汎用リンク
+- `data/trip-data.js`: 公開してよい表示データ
+- `data/private-trip.enc.js`: 暗号化された旅程データ
 
-- `title`: しおりのタイトル
-- `dates`: 表示用の日程
-- `destination`: 旅先の表示名
-- `meeting`: 集合情報
-- `days`: 日ごとの予定
-- `packing`: 持ち物チェックリスト
-- `links`: 当日見るリンク
-- `notes`: 公開ページ上の注意メモ
+旅程に関する日付、集合、移動、宿泊、帰路などは `schedule.html` に一本化しています。
 
-公開ページにする前提なので、予約番号、個人名、電話番号、詳しい住所は入れない運用がおすすめです。
+## 暗号化された旅程
 
-## 内緒メモ
-
-`private.html` は `data/private-trip.enc.js` の暗号化データをブラウザ内で復号します。
+`schedule.html` は `data/private-trip.enc.js` の暗号化データをブラウザ内で復号します。
 パスフレーズはリポジトリに保存しません。
 
 公開リポジトリに平文の私的情報を置かないため、暗号化前のJSONなどを作る場合はコミットしないでください。

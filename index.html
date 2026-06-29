@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="友人旅行向けの安全版Webしおりテンプレートです。">
+    <meta name="description" content="旅程を暗号化して共有する旅行しおりです。">
     <title>旅行のしおり</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/styles.css">
@@ -13,14 +13,13 @@
       <div class="header-inner">
         <a class="site-title" href="index.html">
           <strong class="js-trip-title">旅行のしおり</strong>
-          <span class="js-trip-dates">旅の日程</span>
+          <span class="js-trip-dates">旅程はパスフレーズで確認</span>
         </a>
         <nav class="site-nav" aria-label="メインナビゲーション">
           <a href="index.html" aria-current="page">トップ</a>
-          <a href="schedule.html">日程</a>
+          <a href="schedule.html">旅程</a>
           <a href="packing.html">持ち物</a>
           <a href="links.html">リンク</a>
-          <a href="private.html">内緒メモ</a>
         </nav>
       </div>
     </header>
@@ -28,15 +27,15 @@
     <main class="page">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow js-trip-destination">旅先</p>
+          <p class="eyebrow js-trip-destination">旅程ロック中</p>
           <h1 id="hero-title" class="js-trip-title">旅行のしおり</h1>
           <p class="lead">
-            予定、集合、持ち物、当日見るリンクをひとつにまとめました。
-            旅先でも見返しやすい、軽めの友人旅行しおりです。
+            日付、集合、移動、宿泊、帰路など旅程に関する情報は、すべて旅程ページにまとめています。
+            パスフレーズを知っている人だけがブラウザ上で開けます。
           </p>
           <div class="hero-actions">
-            <a class="button" href="schedule.html">日程を見る</a>
-            <a class="button secondary" href="private.html">内緒メモを開く</a>
+            <a class="button" href="schedule.html">旅程を開く</a>
+            <a class="button secondary" href="packing.html">持ち物を確認</a>
           </div>
         </div>
         <div class="hero-media">
@@ -44,26 +43,24 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="meeting-title">
+      <section class="section" aria-labelledby="private-title">
         <div class="section-header">
-          <h2 id="meeting-title">集合メモ</h2>
-          <p>集合前に見たいことだけを短くまとめます。</p>
+          <h2 id="private-title">旅程はパスフレーズで開く</h2>
+          <p>公開ページには、旅程に関わる具体的な日付、場所、時刻、宿泊、帰路を置きません。</p>
         </div>
-        <div class="card js-meeting"></div>
-      </section>
-
-      <section class="section" aria-labelledby="days-title">
-        <div class="section-header">
-          <h2 id="days-title">旅の流れ</h2>
-          <p>まずはざっくり見て、細かい予定は日程ページで確認します。</p>
+        <div class="card">
+          <h3>このページで見られるもの</h3>
+          <p>持ち物リスト、汎用リンク、旅程ページへの入口だけです。</p>
+          <div class="action-row">
+            <a class="button" href="schedule.html">パスフレーズで旅程を見る</a>
+          </div>
         </div>
-        <div class="grid js-day-preview"></div>
       </section>
 
       <section class="section" aria-labelledby="safe-title">
         <div class="section-header">
           <h2 id="safe-title">公開ページの約束</h2>
-          <p>URLを共有しやすいように、しおりには安全寄りの情報だけを置きます。</p>
+          <p>URLを知っている人が見られる前提で、公開側には最低限の内容だけを置きます。</p>
         </div>
         <div class="note-panel">
           <ul class="note-list js-notes"></ul>
@@ -73,7 +70,7 @@
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <span class="js-trip-title">旅行のしおり</span> / <span class="js-trip-destination">旅先</span>
+        <span class="js-trip-title">旅行のしおり</span> / 旅程はパスフレーズで確認
       </div>
     </footer>
 

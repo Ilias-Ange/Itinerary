@@ -129,7 +129,7 @@
         ${trip.days.map(renderDay).join("")}
       </div>
       <aside class="note-panel">
-        <h2>内緒メモの扱い</h2>
+        <h2>旅程の扱い</h2>
         <ul class="note-list">
           ${trip.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}
         </ul>
@@ -146,7 +146,7 @@
       return;
     }
 
-    status.textContent = "確認中です...";
+      status.textContent = "旅程を確認中です...";
     form.querySelector("button").disabled = true;
 
     try {
@@ -156,12 +156,12 @@
       if (lockSection) {
         lockSection.hidden = true;
       }
-      status.textContent = "開きました。";
+      status.textContent = "旅程を開きました。";
       passphraseInput.value = "";
     } catch (_error) {
       content.hidden = true;
       content.innerHTML = "";
-      status.textContent = "開けませんでした。パスフレーズを確認してください。";
+      status.textContent = "旅程を開けませんでした。パスフレーズを確認してください。";
     } finally {
       form.querySelector("button").disabled = false;
     }

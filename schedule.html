@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="旅行の日程を確認するページです。">
-    <title>日程 | 旅行のしおり</title>
+    <meta name="description" content="パスフレーズで開く旅行の旅程です。">
+    <title>旅程 | 旅行のしおり</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/styles.css">
   </head>
@@ -13,39 +13,56 @@
       <div class="header-inner">
         <a class="site-title" href="index.html">
           <strong class="js-trip-title">旅行のしおり</strong>
-          <span class="js-trip-dates">旅の日程</span>
+          <span class="js-trip-dates">旅程はパスフレーズで確認</span>
         </a>
         <nav class="site-nav" aria-label="メインナビゲーション">
           <a href="index.html">トップ</a>
-          <a href="schedule.html" aria-current="page">日程</a>
+          <a href="schedule.html" aria-current="page">旅程</a>
           <a href="packing.html">持ち物</a>
           <a href="links.html">リンク</a>
-          <a href="private.html">内緒メモ</a>
         </nav>
       </div>
     </header>
 
     <main class="page">
       <section class="page-title" aria-labelledby="page-title">
-        <p class="eyebrow js-trip-destination">旅先</p>
-        <h1 id="page-title">日程</h1>
+        <p class="eyebrow js-trip-destination">旅程ロック中</p>
+        <h1 id="page-title">旅程</h1>
         <p class="lead">
-          旅先で見返しやすいよう、時間順にまとめました。
+          日付、集合、移動、宿泊、帰路など、旅程に関する情報はここに一本化しました。
+          パスフレーズを入れると、このブラウザ上で開けます。
         </p>
       </section>
 
-      <section class="section" aria-label="旅程一覧">
-        <div class="js-schedule"></div>
+      <section class="section private-lock" aria-labelledby="unlock-title">
+        <div class="private-lock-panel">
+          <h2 id="unlock-title">パスフレーズを入力</h2>
+          <p>
+            入力したパスフレーズは送信されません。この端末のブラウザ内で、暗号化された旅程の復号だけに使います。
+          </p>
+          <form class="unlock-form js-private-form">
+            <label for="private-passphrase">パスフレーズ</label>
+            <div class="unlock-row">
+              <input id="private-passphrase" class="js-private-passphrase" type="password" autocomplete="current-password" inputmode="text">
+              <button class="button" type="submit">旅程を開く</button>
+            </div>
+            <p class="private-status js-private-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
       </section>
+
+      <section class="section private-content js-private-content" aria-live="polite" hidden></section>
     </main>
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <span class="js-trip-title">旅行のしおり</span> / 日程
+        <span class="js-trip-title">旅行のしおり</span> / 旅程
       </div>
     </footer>
 
     <script src="data/trip-data.js"></script>
+    <script src="data/private-trip.enc.js?v=itinerary-v3"></script>
     <script src="assets/app.js"></script>
+    <script src="assets/private.js"></script>
   </body>
 </html>
