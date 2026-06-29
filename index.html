@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="友人旅行向けの安全版Webしおりテンプレートです。">
+    <title>旅行のしおり</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="index.html">
+          <strong class="js-trip-title">旅行のしおり</strong>
+          <span class="js-trip-dates">旅の日程</span>
+        </a>
+        <nav class="site-nav" aria-label="メインナビゲーション">
+          <a href="index.html" aria-current="page">トップ</a>
+          <a href="schedule.html">日程</a>
+          <a href="packing.html">持ち物</a>
+          <a href="links.html">リンク</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow js-trip-destination">旅先</p>
+          <h1 id="hero-title" class="js-trip-title">旅行のしおり</h1>
+          <p class="lead">
+            予定、集合、持ち物、当日見るリンクをひとつにまとめました。
+            旅先でも見返しやすい、軽めの友人旅行しおりです。
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="schedule.html">日程を見る</a>
+            <a class="button secondary" href="packing.html">持ち物を確認</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img class="cover-image" src="assets/cover.jpg" alt="旅ノートと地図が置かれたテーブル">
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="meeting-title">
+        <div class="section-header">
+          <h2 id="meeting-title">集合メモ</h2>
+          <p>集合前に見たいことだけを短くまとめます。</p>
+        </div>
+        <div class="card js-meeting"></div>
+      </section>
+
+      <section class="section" aria-labelledby="days-title">
+        <div class="section-header">
+          <h2 id="days-title">旅の流れ</h2>
+          <p>まずはざっくり見て、細かい予定は日程ページで確認します。</p>
+        </div>
+        <div class="grid js-day-preview"></div>
+      </section>
+
+      <section class="section" aria-labelledby="safe-title">
+        <div class="section-header">
+          <h2 id="safe-title">公開ページの約束</h2>
+          <p>URLを共有しやすいように、しおりには安全寄りの情報だけを置きます。</p>
+        </div>
+        <div class="note-panel">
+          <ul class="note-list js-notes"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="js-trip-title">旅行のしおり</span> / <span class="js-trip-destination">旅先</span>
+      </div>
+    </footer>
+
+    <script src="data/trip-data.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

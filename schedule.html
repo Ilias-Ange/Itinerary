@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="旅行の日程を確認するページです。">
+    <title>日程 | 旅行のしおり</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="schedule">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="index.html">
+          <strong class="js-trip-title">旅行のしおり</strong>
+          <span class="js-trip-dates">旅の日程</span>
+        </a>
+        <nav class="site-nav" aria-label="メインナビゲーション">
+          <a href="index.html">トップ</a>
+          <a href="schedule.html" aria-current="page">日程</a>
+          <a href="packing.html">持ち物</a>
+          <a href="links.html">リンク</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-title" aria-labelledby="page-title">
+        <p class="eyebrow js-trip-destination">旅先</p>
+        <h1 id="page-title">日程</h1>
+        <p class="lead">
+          旅先で見返しやすいよう、時間順にまとめました。
+        </p>
+      </section>
+
+      <section class="section" aria-label="旅程一覧">
+        <div class="js-schedule"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="js-trip-title">旅行のしおり</span> / 日程
+      </div>
+    </footer>
+
+    <script src="data/trip-data.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
