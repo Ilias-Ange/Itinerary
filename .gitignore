@@ -1,3 +1,4 @@
 private-trip.json
 *.private.json
 tmp-private-trip.json
+data/private-trip.local.js

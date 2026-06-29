@@ -223,6 +223,25 @@
     `;
   }
 
+  function renderMap(map) {
+    if (!map || !map.url) {
+      return "";
+    }
+
+    return `
+      <section class="map-panel" aria-label="Google Maps">
+        <div class="map-panel-copy">
+          <p class="map-kicker">Google Maps</p>
+          <h2>${escapeHtml(map.title || "地図")}</h2>
+          ${map.memo ? `<p>${escapeHtml(map.memo)}</p>` : ""}
+        </div>
+        <a class="button map-button" href="${escapeHtml(map.url)}" target="_blank" rel="noopener">
+          &#22320;&#22259;&#12434;&#38283;&#12367;
+        </a>
+      </section>
+    `;
+  }
+
   function renderPrivateTrip(trip) {
     const planStatus = buildPlanStatus(trip);
 
@@ -248,6 +267,7 @@
           <p>${escapeHtml(trip.source)}</p>
         </article>
       </div>
+      ${renderMap(trip.map)}
       <div class="private-days">
         ${trip.days.map((day, dayIndex) => renderDay(day, dayIndex, planStatus)).join("")}
       </div>

@@ -20,6 +20,16 @@ GitHub Pagesで公開する、旅行しおりの静的サイトです。
 
 公開リポジトリに平文の私的情報を置かないため、暗号化前のJSONなどを作る場合はコミットしないでください。
 
+## 旅程を手で編集するとき
+
+作業用の平文データは `data/private-trip.local.js` に置きます。このファイルは `.gitignore` 済みなので、GitHub Pages には公開されません。
+
+1. `data/private-trip.local.js` の `window.PRIVATE_TRIP_SOURCE` を編集します。
+2. `node tools/encrypt-private-trip.js data/private-trip.local.js 0000` を実行します。
+3. 生成された `data/private-trip.enc.js` と更新された `schedule.html` をコミットしてpushします。
+
+地図リンクや宿泊先など、伏せたい情報は `data/private-trip.local.js` 側に書き、暗号化してから公開します。
+
 ## ローカル確認
 
 ```powershell
