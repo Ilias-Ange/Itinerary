@@ -66,17 +66,134 @@
     return JSON.parse(decoder.decode(plain));
   }
 
-  function renderPlan(plan) {
+  function dateKeyFromDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function parseDayDate(value) {
+    const match = text(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) {
+      return null;
+    }
+
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    return new Date(year, month - 1, day);
+  }
+
+  function parsePlanTime(value, fallbackIndex) {
+    const timeText = text(value).trim();
+    const direct = timeText.match(/^(\d{1,2})[:：](\d{2})/);
+
+    if (direct) {
+      return {
+        hours: Number(direct[1]),
+        minutes: Number(direct[2])
+      };
+    }
+
+    if (/[\u671d]|\u5348\u524d/.test(timeText)) {
+      return { hours: 9, minutes: 0 };
+    }
+
+    if (/\u663c/.test(timeText)) {
+      return { hours: 12, minutes: 0 };
+    }
+
+    if (/\u5915\u65b9/.test(timeText)) {
+      return { hours: 16, minutes: 0 };
+    }
+
+    if (/\u591c/.test(timeText)) {
+      return { hours: 20, minutes: 0 };
+    }
+
+    const fallbackHour = Math.min(23, 8 + fallbackIndex);
+    return { hours: fallbackHour, minutes: 0 };
+  }
+
+  function planDateTime(day, plan, planIndex) {
+    const dayDate = parseDayDate(day.date);
+    if (!dayDate) {
+      return null;
+    }
+
+    const time = parsePlanTime(plan.time, planIndex);
+    return new Date(
+      dayDate.getFullYear(),
+      dayDate.getMonth(),
+      dayDate.getDate(),
+      time.hours,
+      time.minutes,
+      0,
+      0
+    );
+  }
+
+  function planKey(dayIndex, planIndex) {
+    return `${dayIndex}:${planIndex}`;
+  }
+
+  function buildPlanStatus(trip) {
+    const now = new Date();
+    const todayDate = dateKeyFromDate(now);
+    const planStatuses = new Map();
+    const datedPlans = [];
+
+    trip.days.forEach((day, dayIndex) => {
+      day.plans.forEach((plan, planIndex) => {
+        const dateTime = planDateTime(day, plan, planIndex);
+        if (!dateTime) {
+          return;
+        }
+
+        datedPlans.push({
+          dateTime,
+          dayIndex,
+          planIndex,
+          key: planKey(dayIndex, planIndex)
+        });
+      });
+    });
+
+    datedPlans.sort((left, right) => {
+      const dateDelta = left.dateTime.getTime() - right.dateTime.getTime();
+      if (dateDelta !== 0) {
+        return dateDelta;
+      }
+
+      return left.dayIndex - right.dayIndex || left.planIndex - right.planIndex;
+    });
+
+    const nextPlan = datedPlans.find((plan) => plan.dateTime.getTime() >= now.getTime());
+    if (nextPlan) {
+      planStatuses.set(nextPlan.key, "is-next");
+    }
+
+    return { todayDate, planStatuses };
+  }
+
+  function renderPlan(plan, dayIndex, planIndex, planStatus) {
+    const statusClass = planStatus.planStatuses.get(planKey(dayIndex, planIndex));
+    const className = ["plan-item", statusClass].filter(Boolean).join(" ");
+    const statusPill = statusClass === "is-next"
+      ? `<span class="status-pill">&#27425;&#12398;&#20104;&#23450;</span>`
+      : "";
     const link = plan.url
       ? `<a class="plan-link" href="${escapeHtml(plan.url)}" target="_blank" rel="noopener">関連リンクを開く</a>`
       : "";
 
     return `
-      <li class="plan-item">
+      <li class="${className}">
         <div class="plan-time">${escapeHtml(plan.time)}</div>
         <div>
           <div class="plan-title-row">
             <h3>${escapeHtml(plan.title)}</h3>
+            ${statusPill}
           </div>
           <div class="plan-place">${escapeHtml(plan.placeLabel)}</div>
           ${plan.memo ? `<p>${escapeHtml(plan.memo)}</p>` : ""}
@@ -86,9 +203,13 @@
     `;
   }
 
-  function renderDay(day) {
+  function renderDay(day, dayIndex, planStatus) {
+    const className = ["day-block", day.date === planStatus.todayDate ? "is-today" : ""]
+      .filter(Boolean)
+      .join(" ");
+
     return `
-      <article class="day-block">
+      <article class="${className}">
         <div class="day-heading">
           <div>
             <h2>${escapeHtml(day.label)}</h2>
@@ -96,13 +217,15 @@
           </div>
         </div>
         <ol class="timeline">
-          ${day.plans.map(renderPlan).join("")}
+          ${day.plans.map((plan, planIndex) => renderPlan(plan, dayIndex, planIndex, planStatus)).join("")}
         </ol>
       </article>
     `;
   }
 
   function renderPrivateTrip(trip) {
+    const planStatus = buildPlanStatus(trip);
+
     content.hidden = false;
     content.innerHTML = `
       <div class="section-header">
@@ -126,7 +249,7 @@
         </article>
       </div>
       <div class="private-days">
-        ${trip.days.map(renderDay).join("")}
+        ${trip.days.map((day, dayIndex) => renderDay(day, dayIndex, planStatus)).join("")}
       </div>
       <aside class="note-panel">
         <h2>旅程の扱い</h2>
