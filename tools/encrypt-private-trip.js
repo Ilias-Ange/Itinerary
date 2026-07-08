@@ -29,6 +29,10 @@ function loadTripSource(sourcePath) {
     return sandbox.window.PRIVATE_TRIP_SOURCE;
   }
 
+  if (sandbox.window.PRIVATE_TRIP) {
+    return sandbox.window.PRIVATE_TRIP;
+  }
+
   if (sandbox.exports.default) {
     return sandbox.exports.default;
   }
