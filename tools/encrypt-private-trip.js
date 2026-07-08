@@ -60,6 +60,55 @@ function validateTrip(trip) {
   });
 }
 
+function normalizeUrlValue(value) {
+  if (typeof value !== "string") {
+    return value;
+  }
+
+  const cleaned = value
+    .trim()
+    .replace(/%20/gi, " ")
+    .replace(/^([a-z][a-z0-9+.-]*)\s*:\s*/i, "$1:")
+    .replace(/\s*\/\s*/g, "/")
+    .replace(/\s*\.\s*/g, ".")
+    .replace(/\?\s*/g, "?")
+    .replace(/\s*&\s*/g, "&")
+    .replace(/\s*=\s*/g, "=")
+    .replace(/\s*#\s*/g, "#");
+
+  if (!cleaned) {
+    return "";
+  }
+
+  const withScheme = /^[a-z][a-z0-9+.-]*:/i.test(cleaned)
+    ? cleaned
+    : `https://${cleaned}`;
+
+  try {
+    const url = new URL(withScheme);
+    return url.href;
+  } catch (_error) {
+    return cleaned;
+  }
+}
+
+function normalizeTripUrls(value, key = "") {
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeTripUrls(item));
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([childKey, childValue]) => [
+        childKey,
+        normalizeTripUrls(childValue, childKey)
+      ])
+    );
+  }
+
+  return key === "url" ? normalizeUrlValue(value) : value;
+}
+
 async function askPassphrase() {
   if (process.env.TRIP_PASSPHRASE) {
     return process.env.TRIP_PASSPHRASE;
@@ -145,7 +194,7 @@ async function main() {
   const sourcePath = path.resolve(process.cwd(), process.argv[2] || "data/private-trip.local.js");
   const outputPath = path.resolve(process.cwd(), "data/private-trip.enc.js");
   const htmlPath = path.resolve(process.cwd(), "schedule.html");
-  const trip = loadTripSource(sourcePath);
+  const trip = normalizeTripUrls(loadTripSource(sourcePath));
   const passphrase = process.argv[3] || await askPassphrase();
 
   validateTrip(trip);
